@@ -75,7 +75,7 @@ class ViewController: UIViewController {
             view.layer.cornerRadius = .random(in: 0 ... view.bounds.height / 2)
             view.backgroundColor = UIColor(
                 rgb: String(format:"%06X", Int.random(in: 0..<(1 << 24)))
-                )!
+                )
         }
     }
 }
