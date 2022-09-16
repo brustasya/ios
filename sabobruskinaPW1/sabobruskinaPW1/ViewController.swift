@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     @IBOutlet var views: [UIView]!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.setColorAndCorner()
     }
     
