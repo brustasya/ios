@@ -6,7 +6,6 @@
 //
 
 
-// Не понимаю что требовалось в задании(((
 import UIKit
 
 final class ColorPaletteView: UIControl {
