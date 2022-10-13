@@ -13,8 +13,8 @@ class WelcomeViewController: UIViewController {
     private var value: Int = 0
     private let incrementButton = UIButton()
     let colorPaletteView = ColorPaletteView()
-    let commentView = UIView()
-
+    private let commentView = UIView()
+    var buttonsSV = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +28,12 @@ class WelcomeViewController: UIViewController {
         
         setupIncrementButton()
         setupValueLabel()
-        //view.addSubview(setupCommentView())
-        setupColorControlSV(buttonsSV: setupMenuButtons())
+        setupMenuButtons()
+        setupColorControlSV()
+        view.addSubview(setupCommentView())
     }
     
-    private func setupMenuButtons() -> UIStackView {
+    private func setupMenuButtons() {
         let colorsButton = makeMenuButton(title: "🎨")
         
         colorsButton.addTarget(
@@ -44,7 +45,7 @@ class WelcomeViewController: UIViewController {
         let notesButton = makeMenuButton(title: "📝")
         let newsButton = makeMenuButton(title: "📰")
         
-        let buttonsSV = UIStackView(
+        buttonsSV = UIStackView(
             arrangedSubviews: [colorsButton, notesButton, newsButton]
         )
         
@@ -61,18 +62,19 @@ class WelcomeViewController: UIViewController {
         buttonsSV.pinBottom(
             to: self.view.safeAreaLayoutGuide.bottomAnchor, 24
         )
-        
-        return buttonsSV
     }
+    
     private func makeMenuButton(title: String) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 12
+        
         button.titleLabel?.font = .systemFont(
             ofSize: 16.0,
             weight: .medium
         )
+        
         button.backgroundColor = .white
         
         button.heightAnchor.constraint(
@@ -82,7 +84,7 @@ class WelcomeViewController: UIViewController {
         return button
     }
     
-    private func setupColorControlSV(buttonsSV: UIStackView) {
+    private func setupColorControlSV() {
         colorPaletteView.isHidden = true
         view.addSubview(colorPaletteView)
         
@@ -126,7 +128,11 @@ class WelcomeViewController: UIViewController {
         )
         
         incrementButton.backgroundColor = .white
-        //incrementButton.layer.applyShadow()
+        
+        incrementButton.layer.shadowColor = UIColor.black.cgColor
+        incrementButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        incrementButton.layer.shadowOpacity = 0.1
+        incrementButton.layer.shadowRadius = 5.0
         
         self.view.addSubview(incrementButton)
         incrementButton.setHeight(to: 48)
@@ -157,9 +163,12 @@ class WelcomeViewController: UIViewController {
     
     @objc
     private func incrementButtonPressed() {
+        commentView.isHidden = false
         value += 1
+        
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
+        
         UIView.animate(withDuration: 1) {
             self.updateUI()
         }
